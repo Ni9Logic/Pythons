@@ -40,6 +40,8 @@ class SignInPage:
                 "\t\t\t\u001b[1;31mNOTE:\u001b[1;0m You've entered incorrect \u001b[1;31mCredentials\u001b[1;0m")
             print(
                 "\t\t\tForcing session \u001b[1;31m(logged out)\u001b[1;0m\n")
+            print("\t\t\tPress Any Key to continue...")
+            m.getch()
             SignInPage.Logged = False
 
 
@@ -77,7 +79,8 @@ class NewUser:
                 "\t\t\tEnter\u001b[1;31m InitialDeposit\u001b[1;0m For User: ")
             file.write(self.new_user_Account_ID)
             file.write("\n")
-        print("\t\t\tAccount Successfully Created\n\t\t\tPress Any Key to continue")
+        print(
+            "\t\t\tAccount \u001b[1;31mSuccessfully Created\u001b[1;0m\n\t\t\tPress Any Key to continue")
         m.getch()
 
 
@@ -107,7 +110,7 @@ class Admin(SignInPage, NewUser):
                 self.admin_choice = int(
                     input("\u001b[1;31m\t\t\tEnter <1-7>: \u001b[1;0m: "))
         if self.admin_choice == 1:
-            c = 0
+            Admin.case1_delete_account()
         elif self.admin_choice == 2:
             r = 0
         elif self.admin_choice == 3:
@@ -119,6 +122,37 @@ class Admin(SignInPage, NewUser):
             self.admin_log = False
         elif self.admin_choice == 6:
             quit()
+
+    def case1_delete_account():
+        os.system('cls||clear')
+        deleted = False
+        delaccount = input(
+            "\t\t\tEnter the desired account you want to delete: ")
+        print("\t\t\t", delaccount)
+        file_r = open("usernames.txt", "r")
+        file_w = open("temp.txt", "w")
+
+        empty = ' '
+        file_r.seek(0)
+        while(empty):
+            empty = file_r.readline()
+            lines = empty
+            if len(empty) > 0:
+                if lines != delaccount:
+                    file_w.write(empty)
+                    deleted = True
+        file_w.close()
+        file_r.close()
+        os.remove("usernames.txt")
+        os.rename("temp.txt", "usernames.txt")
+        if deleted == True:
+            print(
+                "\t\t\tAccount deleted Successfully\n\t\t\tPress Any Key to continue...")
+            m.getch()
+        else:
+            print("\t\t\tNo Such Username found!\n")
+            print("\t\t\tPress any key to continue...")
+            m.getch()
 
 
 def main():
