@@ -1,4 +1,5 @@
 import os
+import time
 import msvcrt as m
 
 
@@ -44,7 +45,7 @@ class SignInPage:
             SignInPage.Logged = False
 
 
-class NewUser:
+class NewUser:  # DO SOMETHING IF USERNAME ALREADY EXISTS!
     new_user_name = "0"
     new_user_pass = "0"
     new_user_Account_Type = "0"
@@ -59,20 +60,23 @@ class NewUser:
             )
             file.write(self.new_user_name)
             file.write("\n")
+
         with open("passwords.txt", "a") as file:
             self.new_user_pass = input(
                 "\t\t\tEnter\u001b[1;31m Password\u001b[1;0m For User: "
             )
             file.write(self.new_user_pass)
             file.write("\n")
+
         with open("Account_Type.txt", "a") as file:
             self.new_user_Account_Type = input(
                 "\t\t\tEnter\u001b[1;31m Account_Type\u001b[1;0m For User: "
             )
             file.write(self.new_user_Account_Type)
             file.write("\n")
+
         with open("BankBal.txt", "a") as file:
-            self.new_user_Account_Type = input(
+            self.new_user_BankBal = input(
                 "\t\t\tEnter\u001b[1;31m InitialDeposit\u001b[1;0m For User: "
             )
             file.write(self.new_user_BankBal)
@@ -125,7 +129,8 @@ class Admin(SignInPage, NewUser):
                 Admin.case2_display_all_accounts()
                 end = "y"
             elif self.admin_choice == 3:
-                g = 0
+                Admin.case3_sepcific_details()
+                end = "y"
             elif self.admin_choice == 4:
                 c = 0
             elif self.admin_choice == 5:
@@ -177,6 +182,50 @@ class Admin(SignInPage, NewUser):
             "\u001b[1;0maccounts present currently\n\t\t\tPress any \u001b[1;31mkey\u001b[1;0m to continue...",
         )
         m.getch()
+
+    def case3_sepcific_details():
+        os.system("cls||clear")
+        index = 0
+        passed = False
+        search = input("\t\t\tEnter the \u001b[1;31mname\u001b[1;0m of the user: ")
+        with open("usernames.txt", "r") as file:
+            for lines in file:
+                index = index + 1
+                if lines.strip() == search:
+                    passed = True
+                else:
+                    passed = False
+        if passed:
+            print("\t\t\tUser Found....")
+            time.sleep(2)
+            print("\t\t\t\u001b[1;31mName\u001b[1;0m of the user is: ", lines)
+            with open("passwords.txt", "r") as file:
+                print(
+                    "\t\t\t\u001b[1;31mPassword\u001b[1;0m of the user is: ",
+                    file.readlines(index),
+                )
+            with open("Account_Type.txt", "r") as file:
+                print(
+                    "\t\t\t\u001b[1;31mAccount Type\u001b[1;0m of the user is: ",
+                    file.readlines(index),
+                )
+            with open("BankBal.txt", "r") as file:
+                print(
+                    "\t\t\t\u001b[1;31mBank Balance\u001b[1;0m of the user is: ",
+                    file.readlines(index),
+                )
+            with open("Account_ID.txt", "r") as file:
+                print(
+                    "\t\t\t\u001b[1;31mAccount ID\u001b[1;0m of the user is: ",
+                    file.readlines(index),
+                )
+            print("\t\t\tPress any key to continue...")
+            m.getch()
+        else:
+            print(
+                "\t\t\tUser \u001b[1;31mnot\u001b[1;0m Found\n\t\t\tPress any \u001b[1;31mkey\u001b[1;0m to continue..."
+            )
+            m.getch()
 
 
 def main():
