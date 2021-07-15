@@ -79,7 +79,7 @@ class NewUser:
             file.write("\n")
         with open("Account_ID.txt", "a") as file:
             self.new_user_Account_ID = input(
-                "\t\t\tEnter\u001b[1;31m InitialDeposit\u001b[1;0m For User: "
+                "\t\t\tEnter\u001b[1;31m Account_ID\u001b[1;0m For User: "
             )
             file.write(self.new_user_Account_ID)
             file.write("\n")
@@ -122,7 +122,8 @@ class Admin(SignInPage, NewUser):
                 Admin.case1_delete_account()
                 end = "y"
             elif self.admin_choice == 2:
-                r = 0
+                Admin.case2_display_all_accounts()
+                end = "y"
             elif self.admin_choice == 3:
                 g = 0
             elif self.admin_choice == 4:
@@ -136,7 +137,9 @@ class Admin(SignInPage, NewUser):
     def case1_delete_account():
         os.system("cls||clear")
         deleted = False
-        delaccount = input("\t\t\tEnter the desired account you want to delete: ")
+        delaccount = input(
+            "\t\t\tEnter the \u001b[1;31mdesired account\u001b[1;0m you want to \u001b[1;31mdelete\u001b[1;0m: "
+        )
         with open("usernames.txt", "r") as file:
             with open("tempusers.txt", "w") as tempfile:
                 for line in file:
@@ -150,13 +153,30 @@ class Admin(SignInPage, NewUser):
         os.rename("tempusers.txt", "usernames.txt")
         if deleted == True:
             print(
-                "\t\t\tAccount deleted Successfully\n\t\t\tPress Any Key to continue..."
+                "\t\t\tAccount \u001b[1;31mdeleted Successfully\u001b[1;0m\n\t\t\tPress Any \u001b[1;31mKey\u001b[1;0m to continue..."
             )
             m.getch()
         else:
-            print("\t\t\tNo Such Username found!\n")
-            print("\t\t\tPress any key to continue...")
+            print("\t\t\t\u001b[1;31mNo Such\u001b[1;0m Username found!\n")
+            print("\t\t\tPress any \u001b[1;31mkey\u001b[1;0m to continue...")
             m.getch()
+
+    def case2_display_all_accounts():
+        os.system("cls||clear")
+        totalaccounts = 0
+        counter = 0
+        print("\t\t\tHere's the \u001b[1;31mlist of all\u001b[1;0m the accounts below:")
+        with open("usernames.txt", "r") as file:
+            for lines in file:
+                totalaccounts = totalaccounts + 1
+                counter = counter + 1
+                print("\t\t\t", counter, ".", lines)
+        print(
+            "\t\t\tThere are total of\u001b[1;31m",
+            totalaccounts,
+            "\u001b[1;0maccounts present currently\n\t\t\tPress any \u001b[1;31mkey\u001b[1;0m to continue...",
+        )
+        m.getch()
 
 
 def main():
