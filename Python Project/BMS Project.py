@@ -128,23 +128,19 @@ class Admin(SignInPage, NewUser):
         deleted = False
         delaccount = input(
             "\t\t\tEnter the desired account you want to delete: ")
-        print("\t\t\t", delaccount)
-        file_r = open("usernames.txt", "r")
-        file_w = open("temp.txt", "w")
+        # Inorder to delelte something from a file you need to have two files!
+        with open("usernames.txt", "r") as file:
+            # This method is working fine! but the thing is it doesn't check if the data we're deleting is already present in the file or not
+            with open("tempusers.txt", "w") as tempfile:
+                for line in file:
+                    if line.strip("\n") != delaccount:
+                        tempfile.write(line)
+                        deleted = True
+                    else:
+                        deleted = False
 
-        empty = ' '
-        file_r.seek(0)
-        while(empty):
-            empty = file_r.readline()
-            lines = empty
-            if len(empty) > 0:
-                if lines != delaccount:
-                    file_w.write(empty)
-                    deleted = True
-        file_w.close()
-        file_r.close()
         os.remove("usernames.txt")
-        os.rename("temp.txt", "usernames.txt")
+        os.rename("tempusers.txt", "usernames.txt")
         if deleted == True:
             print(
                 "\t\t\tAccount deleted Successfully\n\t\t\tPress Any Key to continue...")
