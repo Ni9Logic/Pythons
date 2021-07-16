@@ -45,7 +45,7 @@ class SignInPage:
             SignInPage.Logged = False
 
 
-class NewUser:  # DO SOMETHING IF USERNAME ALREADY EXISTS!
+class NewUser:
     new_user_name = "0"
     new_user_pass = "0"
     new_user_Account_Type = "0"
@@ -55,7 +55,8 @@ class NewUser:  # DO SOMETHING IF USERNAME ALREADY EXISTS!
     def new_user_createaccount(self):
         already_exists = False
         os.system("cls||clear")
-        # Opening File in Advance in-case the file doesn't exist YET!
+        # Input is going in the variable first because it has to check later in the file
+        # if its present or not
         # Going to Check if the username already exists or not.
         self.new_user_name = input("\t\t\tEnter\u001b[1;31m Name\u001b[1;0m For User: ")
         with open("usernames.txt", "r") as file:
@@ -68,7 +69,7 @@ class NewUser:  # DO SOMETHING IF USERNAME ALREADY EXISTS!
                     print("\t\t\tPress any \u001b[1;31mKey\u001b[1;0m to continue...\n")
                     already_exists = True
                     m.getch()
-                    break
+                    break  # Breaks the loop so that it won't show the error again and again!
         if already_exists == False:
             with open("usernames.txt", "a") as file:
                 file.write(self.new_user_name)
@@ -145,7 +146,8 @@ class Admin(SignInPage, NewUser):
                 Admin.case3_sepcific_details()
                 end = "y"
             elif self.admin_choice == 4:
-                c = 0
+                Admin.case4_modify_user()
+                end = "y"
             elif self.admin_choice == 5:
                 os.system("cls||clear")
                 break
@@ -210,7 +212,7 @@ class Admin(SignInPage, NewUser):
                     passed = False
         if passed:
             print("\t\t\tUser Found....")
-            time.sleep(2)
+            time.sleep(1)
             print("\t\t\t\u001b[1;31mName\u001b[1;0m of the user is: ", lines)
             with open("passwords.txt", "r") as file:
                 print(
@@ -237,6 +239,45 @@ class Admin(SignInPage, NewUser):
         else:
             print(
                 "\t\t\tUser \u001b[1;31mnot\u001b[1;0m Found\n\t\t\tPress any \u001b[1;31mkey\u001b[1;0m to continue..."
+            )
+            m.getch()
+
+    def case4_modify_user():
+        os.system("cls||clear")
+        index = 0
+        modify_user_found = False
+        modify_user = input("\t\t\tEnter the name of the user: ")
+        with open("usernames.txt", "r") as file:
+            for line in file:
+                if line.strip() == modify_user:
+                    index = index + 1
+                    modify_user_found = True
+        if modify_user_found:
+            print("\t\t\tUser account found.....")
+            time.sleep(1)
+            os.system("cls||clear")
+            Enter = "0"
+            if Enter == "0" or Enter > "5":
+                while Enter == "0" or Enter > "5":
+                    os.system("cls||clear")
+                    print("\t\t\tWhat operations do you want to perform?")
+                    print("\t\t\t1 --> Update Name")
+                    print("\t\t\t2 --> Update Password")
+                    print("\t\t\t3 --> Update Bank Balance")
+                    print("\t\t\t4 --> Update Account Type")
+                    print("\t\t\t5 --> Update Account ID")
+                    Enter = input("\t\t\tEnter <1-5>: ")
+            if Enter == "1":
+                old_user = "0"
+                with open("usernames.txt", "r") as file:
+                    print("\t\t\tYour old username is:", file.readlines(index))
+                    old_user = file.readlines(index)
+                with open("usernames.txt", "a") as file:
+                    new_user = input("Enter new username: ")
+                    file.replace(old_user, new_user)
+        else:
+            print(
+                "\t\t\tUser NOT found\n\t\t\tTry Again Later!\n\t\t\tPress ANY key to continue\n"
             )
             m.getch()
 
