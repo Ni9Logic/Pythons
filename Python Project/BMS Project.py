@@ -32,7 +32,10 @@ class SignInPage:
         self.admin_pass = input("\t\t\tEnter \u001b[1;31mPassword\u001b[1;0m: ")
         if self.admin_name == "admin" and self.admin_pass == "admin":
             os.system("cls||clear")
-            print("\n\t\t\tYou've Successfully logged in as an administrator...")
+            print(
+                "\n\t\t\tYou've Successfully \u001b[1;31mlogged\u001b[1;0m in as an a\u001b[1;31mdministrator\u001b[1;0m..."
+            )
+            time.sleep(1)
             SignInPage.Logged = True
         else:
             os.system("cls||clear")
@@ -244,13 +247,13 @@ class Admin(SignInPage, NewUser):
 
     def case4_modify_user():
         os.system("cls||clear")
-        index = 0
+        Admin.index = 0
         modify_user_found = False
         modify_user = input("\t\t\tEnter the name of the user: ")
         with open("usernames.txt", "r") as file:
             for line in file:
+                Admin.index = Admin.index + 1
                 if line.strip() == modify_user:
-                    index = index + 1
                     modify_user_found = True
         if modify_user_found:
             print("\t\t\tUser account found.....")
@@ -268,17 +271,39 @@ class Admin(SignInPage, NewUser):
                     print("\t\t\t5 --> Update Account ID")
                     Enter = input("\t\t\tEnter <1-5>: ")
             if Enter == "1":
+                os.system("cls||clear")
                 old_user = "0"
                 with open("usernames.txt", "r") as file:
-                    print("\t\t\tYour old username is:", file.readlines(index))
-                    old_user = file.readlines(index)
-                with open("usernames.txt", "a") as file:
-                    new_user = input("Enter new username: ")
-                    file.replace(old_user, new_user)
+                    # I need to test this LOGIC in my code...
+                    """
+                    list = all usernames present in file
+                    for i in range list:
+                        search in list = input
+                        if serachinlist == list[i]
+                            list[i].pop(serachinlist)
+                        newlist = list
+                        newlist = newlist.split()
+                    with open("usernames.txt", "w") as file_write:
+                        file_write(newlist)
+                    """
+
+                    # Commented This LOGIC fails
+                    """
+                    print("\t\t\tYour old username is:", file.readlines(Admin.index))
+                    old_user = file.readlines(Admin.index)
+                    old_user = str(old_user)
+                    new_user = input("\t\t\tYour new username is: ")
+                    file_read = open("usernames.txt", "r")
+                    file_write = open("usernames.txt", "a")
+                    new_user = str(new_user)
+                    for line in file_read:
+                    file_write.write(line.replace(old_user, new_user))
+                    file_read.close()
+                    file_write.close()
+                    """
         else:
-            print(
-                "\t\t\tUser NOT found\n\t\t\tTry Again Later!\n\t\t\tPress ANY key to continue\n"
-            )
+            print("\t\t\tUser NOT found\n\t\t\tTry Again Later!\n")
+            print("\t\t\tPress ANY key to continue\n")
             m.getch()
 
 
