@@ -53,44 +53,57 @@ class NewUser:  # DO SOMETHING IF USERNAME ALREADY EXISTS!
     new_user_Account_ID = "0"
 
     def new_user_createaccount(self):
+        already_exists = False
         os.system("cls||clear")
-        with open("usernames.txt", "a") as file:
-            self.new_user_name = input(
-                "\t\t\tEnter\u001b[1;31m Name\u001b[1;0m For User: "
-            )
-            file.write(self.new_user_name)
-            file.write("\n")
+        # Opening File in Advance in-case the file doesn't exist YET!
+        # Going to Check if the username already exists or not.
+        self.new_user_name = input("\t\t\tEnter\u001b[1;31m Name\u001b[1;0m For User: ")
+        with open("usernames.txt", "r") as file:
+            for line in file:
+                if line.strip() == self.new_user_name:
+                    os.system("cls||clear")
+                    print(
+                        "\t\t\tUsername already \u001b[1;31mExists\u001b[1;0m\n\t\t\tPlease Try \u001b[1;31mAnother\u001b[1;0m Username."
+                    )
+                    print("\t\t\tPress any \u001b[1;31mKey\u001b[1;0m to continue...\n")
+                    already_exists = True
+                    m.getch()
+                    break
+        if already_exists == False:
+            with open("usernames.txt", "a") as file:
+                file.write(self.new_user_name)
+                file.write("\n")
 
-        with open("passwords.txt", "a") as file:
-            self.new_user_pass = input(
-                "\t\t\tEnter\u001b[1;31m Password\u001b[1;0m For User: "
-            )
-            file.write(self.new_user_pass)
-            file.write("\n")
+            with open("passwords.txt", "a") as file:
+                self.new_user_pass = input(
+                    "\t\t\tEnter\u001b[1;31m Password\u001b[1;0m For User: "
+                )
+                file.write(self.new_user_pass)
+                file.write("\n")
 
-        with open("Account_Type.txt", "a") as file:
-            self.new_user_Account_Type = input(
-                "\t\t\tEnter\u001b[1;31m Account_Type\u001b[1;0m For User: "
-            )
-            file.write(self.new_user_Account_Type)
-            file.write("\n")
+            with open("Account_Type.txt", "a") as file:
+                self.new_user_Account_Type = input(
+                    "\t\t\tEnter\u001b[1;31m Account_Type\u001b[1;0m For User: "
+                )
+                file.write(self.new_user_Account_Type)
+                file.write("\n")
 
-        with open("BankBal.txt", "a") as file:
-            self.new_user_BankBal = input(
-                "\t\t\tEnter\u001b[1;31m InitialDeposit\u001b[1;0m For User: "
+            with open("BankBal.txt", "a") as file:
+                self.new_user_BankBal = input(
+                    "\t\t\tEnter\u001b[1;31m InitialDeposit\u001b[1;0m For User: "
+                )
+                file.write(self.new_user_BankBal)
+                file.write("\n")
+            with open("Account_ID.txt", "a") as file:
+                self.new_user_Account_ID = input(
+                    "\t\t\tEnter\u001b[1;31m Account_ID\u001b[1;0m For User: "
+                )
+                file.write(self.new_user_Account_ID)
+                file.write("\n")
+            print(
+                "\t\t\tAccount \u001b[1;31mSuccessfully Created\u001b[1;0m\n\t\t\tPress Any Key to continue"
             )
-            file.write(self.new_user_BankBal)
-            file.write("\n")
-        with open("Account_ID.txt", "a") as file:
-            self.new_user_Account_ID = input(
-                "\t\t\tEnter\u001b[1;31m Account_ID\u001b[1;0m For User: "
-            )
-            file.write(self.new_user_Account_ID)
-            file.write("\n")
-        print(
-            "\t\t\tAccount \u001b[1;31mSuccessfully Created\u001b[1;0m\n\t\t\tPress Any Key to continue"
-        )
-        m.getch()
+            m.getch()
 
 
 class Admin(SignInPage, NewUser):
