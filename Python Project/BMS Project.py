@@ -2,6 +2,8 @@ import os
 import time
 import msvcrt as m
 
+# I am gonna learn & implement mySQL on this now!
+
 
 class SignInPage:
     userchoice = 1
@@ -10,6 +12,7 @@ class SignInPage:
     Logged = False
 
     def login(self):
+        os.system("cls||clear")
         print(
             "\t\t\tWelcome to \u001b[1;31mSUNUDSS KA BANK! HAHAHA MERA BANK\u001b[1;0m"
         )
@@ -247,12 +250,10 @@ class Admin(SignInPage, NewUser):
 
     def case4_modify_user():
         os.system("cls||clear")
-        Admin.index = 0
         modify_user_found = False
         modify_user = input("\t\t\tEnter the name of the user: ")
         with open("usernames.txt", "r") as file:
             for line in file:
-                Admin.index = Admin.index + 1
                 if line.strip() == modify_user:
                     modify_user_found = True
         if modify_user_found:
@@ -272,9 +273,24 @@ class Admin(SignInPage, NewUser):
                     Enter = input("\t\t\tEnter <1-5>: ")
             if Enter == "1":
                 os.system("cls||clear")
-                old_user = "0"
+                Admin.new_usernames = []
+                new_name_user = input("\t\t\tEnter New Name of the User: ")
+                # I need to test this LOGIC in my code...
                 with open("usernames.txt", "r") as file:
-                    # I need to test this LOGIC in my code...
+                    Admin.usernames = []
+                    for line in file:
+                        Admin.usernames.append(line)
+                print("All usernames are: ", Admin.usernames)
+                with open("usernames.txt", "w+") as file:
+                    for line in file:
+                        print("I get in in for loop")
+                        if line.strip() == modify_user:
+                            Admin.new_usernames = Admin.usernames.pop(modify_user)
+                            Admin.new_usernames.append(new_name_user)
+                            print("All new usernames are: ", Admin.new_usernames)
+                            file.write(Admin.new_usernames)
+                    m.getch()
+
                     """
                     list = all usernames present in file
                     for i in range list:
