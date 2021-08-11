@@ -1,4 +1,5 @@
-def makematrix(*matrix):
+def makematrix(*
+o[u;ijh'9lg0i matrix):
     n_rows = int(input("Number of rows:"))
     n_columns = int(input("Number of columns:"))
     #Define the matrix
